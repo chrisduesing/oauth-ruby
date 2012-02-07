@@ -366,7 +366,7 @@ module OAuth
           request["Content-Length"] = request.body.length.to_s
         end
       end
-      puts "oauth-ruby trace (create_http_request): #{request.to_s}"
+      puts "*** oauth-ruby trace (create_http_request): #{request.inspect}\n\t#{request.body}"
       request
     end
 
