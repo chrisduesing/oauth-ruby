@@ -185,6 +185,7 @@ module OAuth
     # Creates and signs an http request.
     # It's recommended to use the Token classes to set this up correctly
     def create_signed_request(http_method, path, token = nil, request_options = {}, *arguments)
+      puts "*** trace (create_signed_request)\n\trequest_options: #{request_options}\n\tblock given: #{arguments}"
       request = create_http_request(http_method, path, *arguments)
       sign!(request, token, request_options)
       request
@@ -192,7 +193,7 @@ module OAuth
 
     # Creates a request and parses the result as url_encoded. This is used internally for the RequestToken and AccessToken requests.
     def token_request(http_method, path, token = nil, request_options = {}, *arguments)
-      puts "*** trace (token_request)\n\trequest_options: #{request_options}\n\tblock given: #{arguments}"
+      puts "*** trace (token_request)\n\ttoken: #{token}\n\trequest_options: #{request_options}\n\tblock given: #{arguments}"
       response = request(http_method, path, token, request_options, *arguments)
       case response.code.to_i
 
