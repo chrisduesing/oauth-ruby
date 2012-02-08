@@ -127,14 +127,13 @@ module OAuth
       request_options[:oauth_callback] ||= OAuth::OUT_OF_BAND unless request_options[:exclude_callback]
 
       if block_given?
-        puts "$$$$$$$$$$$$$$$$$ block given: #{arguments}"
         response = token_request(http_method,
         (request_token_url? ? request_token_url : request_token_path),
         nil,
         request_options,
         *arguments, &block)
       else
-        puts "$$$$$$$$$$$$$$$$$ no block given: #{arguments}"
+        puts "*** trace (get_request_token) block given: #{arguments}"
         response = token_request(http_method, (request_token_url? ? request_token_url : request_token_path), nil, request_options, *arguments)
       end
       OAuth::RequestToken.from_hash(self, response)
@@ -193,6 +192,7 @@ module OAuth
 
     # Creates a request and parses the result as url_encoded. This is used internally for the RequestToken and AccessToken requests.
     def token_request(http_method, path, token = nil, request_options = {}, *arguments)
+      puts "*** trace (token_request)\n\trequest_options: #{request_options}\n\tblock given: #{arguments}"
       response = request(http_method, path, token, request_options, *arguments)
       case response.code.to_i
 
@@ -314,7 +314,7 @@ module OAuth
       http_object.use_ssl = (our_uri.scheme == 'https')
 
       #SECURITY HOLE
-      # http_object.set_debug_output($stdout)
+      http_object.set_debug_output($stdout)
 
       if @options[:ca_file] || CA_FILE
         http_object.ca_file = @options[:ca_file] || CA_FILE
@@ -355,10 +355,12 @@ module OAuth
       
 
       if data.is_a?(Hash)
+        puts "data is a hash"
         form_data = {}
         data.each {|k,v| form_data[k.to_s] = v if !v.nil?}
         request.set_form_data(form_data)
       elsif data
+        puts "data is not a hash"
         if data.respond_to?(:read)
           request.body_stream = data
           if data.respond_to?(:length)
