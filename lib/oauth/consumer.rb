@@ -185,7 +185,7 @@ module OAuth
     # Creates and signs an http request.
     # It's recommended to use the Token classes to set this up correctly
     def create_signed_request(http_method, path, token = nil, request_options = {}, *arguments)
-      puts "*** trace (create_signed_request)\n\trequest_options: #{request_options}\n\tblock given: #{arguments}"
+      puts "*** trace (create_signed_request)\n\ttoken: #{token}\n\trequest_options: #{request_options}\n\tblock given: #{arguments}"
       request = create_http_request(http_method, path, *arguments)
       sign!(request, token, request_options)
       request
@@ -224,6 +224,7 @@ module OAuth
 
     # Sign the Request object. Use this if you have an externally generated http request object you want to sign.
     def sign!(request, token = nil, request_options = {})
+      puts "*** trace (sign!)\n\ttoken: #{token}\n\trequest_options: #{request_options}"
       request.oauth!(http, self, token, options.merge(request_options))
     end
 
