@@ -4,7 +4,6 @@ require 'oauth/oauth'
 require 'oauth/client/net_http'
 require 'oauth/errors'
 require 'cgi'
-require 'pp'
 
 module OAuth
   class Consumer
@@ -348,6 +347,7 @@ module OAuth
       else
         raise ArgumentError, "Don't know how to handle http_method: :#{http_method.to_s}"
       end
+      request.set_debug_output($stdout)
 
       if data.is_a?(Hash)
         form_data = {}
@@ -368,7 +368,6 @@ module OAuth
           request["Content-Length"] = request.body.length.to_s
         end
       end
-      pp request
       request
     end
 
