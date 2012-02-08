@@ -322,6 +322,7 @@ module OAuth
 
     # create the http request object for a given http_method and path
     def create_http_request(http_method, path, *arguments)
+      puts "*** oauth-ruby trace (create_http_request): #{http_method} #{path}\n\t#{arguments}"
       http_method = http_method.to_sym
 
       if [:post, :put].include?(http_method)
@@ -366,7 +367,6 @@ module OAuth
           request["Content-Length"] = request.body.length.to_s
         end
       end
-      puts "*** oauth-ruby trace (create_http_request): #{request.inspect}\n\t#{request.body}"
       request
     end
 
