@@ -367,6 +367,7 @@ module OAuth
           request["Content-Length"] = request.body.length.to_s
         end
       end
+      pp request
       request
     end
 
