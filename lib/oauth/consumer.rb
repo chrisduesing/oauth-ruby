@@ -127,12 +127,14 @@ module OAuth
       request_options[:oauth_callback] ||= OAuth::OUT_OF_BAND unless request_options[:exclude_callback]
 
       if block_given?
+        puts "$$$$$$$$$$$$$$$$$ block given: #{*arguments}"
         response = token_request(http_method,
         (request_token_url? ? request_token_url : request_token_path),
         nil,
         request_options,
         *arguments, &block)
       else
+        puts "$$$$$$$$$$$$$$$$$ no block given: #{*arguments}"
         response = token_request(http_method, (request_token_url? ? request_token_url : request_token_path), nil, request_options, *arguments)
       end
       OAuth::RequestToken.from_hash(self, response)
@@ -326,7 +328,6 @@ module OAuth
 
     # create the http request object for a given http_method and path
     def create_http_request(http_method, path, *arguments)
-      puts "*** oauth-ruby trace (create_http_request): #{http_method} #{path}\n\t#{arguments}"
       http_method = http_method.to_sym
 
       if [:post, :put].include?(http_method)
