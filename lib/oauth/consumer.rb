@@ -314,7 +314,7 @@ module OAuth
       http_object.use_ssl = (our_uri.scheme == 'https')
 
       #SECURITY HOLE
-      http_object.set_debug_output($stdout)
+      # http_object.set_debug_output($stdout)
 
       if @options[:ca_file] || CA_FILE
         http_object.ca_file = @options[:ca_file] || CA_FILE
