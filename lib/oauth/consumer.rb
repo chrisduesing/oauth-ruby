@@ -4,6 +4,7 @@ require 'oauth/oauth'
 require 'oauth/client/net_http'
 require 'oauth/errors'
 require 'cgi'
+require 'pp'
 
 module OAuth
   class Consumer
