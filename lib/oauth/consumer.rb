@@ -127,14 +127,14 @@ module OAuth
       request_options[:oauth_callback] ||= OAuth::OUT_OF_BAND unless request_options[:exclude_callback]
 
       if block_given?
-        puts "$$$$$$$$$$$$$$$$$ block given: #{*arguments}"
+        puts "$$$$$$$$$$$$$$$$$ block given: #{arguments}"
         response = token_request(http_method,
         (request_token_url? ? request_token_url : request_token_path),
         nil,
         request_options,
         *arguments, &block)
       else
-        puts "$$$$$$$$$$$$$$$$$ no block given: #{*arguments}"
+        puts "$$$$$$$$$$$$$$$$$ no block given: #{arguments}"
         response = token_request(http_method, (request_token_url? ? request_token_url : request_token_path), nil, request_options, *arguments)
       end
       OAuth::RequestToken.from_hash(self, response)
