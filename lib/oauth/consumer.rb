@@ -234,8 +234,8 @@ module OAuth
     end
 
     def request_endpoint
-  return nil if @options[:request_endpoint].nil?
-  @options[:request_endpoint].to_s
+      return nil if @options[:request_endpoint].nil?
+      @options[:request_endpoint].to_s
     end
 
     def scheme
@@ -288,6 +288,7 @@ module OAuth
     # Instantiates the http object
     def create_http(_url = nil)
 
+      puts "*** trace (create_http)"
 
       if !request_endpoint.nil?
        _url = request_endpoint
@@ -309,6 +310,9 @@ module OAuth
       end
 
       http_object.use_ssl = (our_uri.scheme == 'https')
+
+      #SECURITY HOLE
+      http.set_debug_output($stdout)
 
       if @options[:ca_file] || CA_FILE
         http_object.ca_file = @options[:ca_file] || CA_FILE
@@ -347,7 +351,7 @@ module OAuth
       else
         raise ArgumentError, "Don't know how to handle http_method: :#{http_method.to_s}"
       end
-      request.set_debug_output($stdout)
+      
 
       if data.is_a?(Hash)
         form_data = {}
